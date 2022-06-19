@@ -4,12 +4,14 @@ import {
 	makeDbCreateAccount,
 	makeDbCreateUser,
 	makeDbFindByWhereAccount,
+	makeDbFindByWhereOrAccount,
 } from "../usecases";
 
 export const makePostRegisterController = (): Controller => {
 	return new PostRegisterController(
 		makeDbFindByWhereAccount(),
 		makeDbCreateAccount(),
-		makeDbCreateUser()
+		makeDbCreateUser(),
+		makeDbFindByWhereOrAccount()
 	);
 };

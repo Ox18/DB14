@@ -75,10 +75,21 @@ export class QueryBuilder {
 		return this.addStep("where", where_query);
 	}
 
+	public whereOrByObject(data: any): QueryBuilder {
+		const keys = Object.keys(data);
+		const values = Object.values(data);
+		const where_query = this.convertToWhereOrByKeyAndValue(keys, values);
+		return this.addStep("where", where_query);
+	}
+
 	private convertToWhereByKeyAndValue(keys: any, values: any): string {
 		return keys
 			.map((key, index) => `${key} = '${values[index]}'`)
 			.join(" and ");
+	}
+
+	private convertToWhereOrByKeyAndValue(keys: any, values: any): string {
+		return keys.map((key, index) => `${key} = '${values[index]}'`).join(" or ");
 	}
 
 	public customized(data: string): QueryBuilder {

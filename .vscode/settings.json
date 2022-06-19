@@ -4,6 +4,7 @@
         "/api/src/domain/usecases",
         "/api/src/infra/db/mysql/repositories",
         "/api/src/presentation/controllers",
-        "/api/src/main/factories/usecases"
+        "/api/src/main/factories/usecases",
+        "/api/src/data/usecases"
     ]
 }

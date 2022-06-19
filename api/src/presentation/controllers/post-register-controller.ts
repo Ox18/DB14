@@ -4,6 +4,7 @@ import {
 	CreateAccount,
 	CreateUser,
 	FindByWhereAccount,
+	FindByWhereOrAccount,
 } from "@/domain/usecases";
 import { AccountModel } from "@/domain/models";
 
@@ -11,7 +12,8 @@ export class PostRegisterController implements Controller {
 	constructor(
 		private readonly findByWhereAccount: FindByWhereAccount,
 		private readonly createAccount: CreateAccount,
-		private readonly createUser: CreateUser
+		private readonly createUser: CreateUser,
+		private readonly findByWhereOrAccount: FindByWhereOrAccount
 	) {}
 
 	async handle(request: PostRegisterController.Request): Promise<HttpResponse> {
