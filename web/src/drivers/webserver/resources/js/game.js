@@ -6046,16 +6046,6 @@ DragonLogin.prototype.Init = function() {
             $.ajax({
                 url: '/ajaxRegister',
                 type: 'post',
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (b) {
-                    $("#RegisterSubmit").removeClass("grayspin");
-                    "string" == typeof b || "<" == b[0] || "I" == b[0] ? alertify.alert(b) : ($("#LoginWindowBG").hide(), $("#container").removeClass("behindDialog"), a.GotLoginData(b), $("#name,#email,#password").val(""), $("input[name=gender]").removeAttr("checked"), $("#year,#month,#day").val("0"))
-                },
-                error: function(){
-                    $("#RegisterSubmit").removeClass("grayspin");
-                    alertify.error("Network Error. Try Again.")
-                },
                 data: JSON.stringify({
                     name: b,
                     email: d,
@@ -6064,7 +6054,16 @@ DragonLogin.prototype.Init = function() {
                     year: f,
                     month: j,
                     day: k
-                })
+                }),
+                success: function (b) {
+                    $("#RegisterSubmit").removeClass("grayspin");
+                    "string" == typeof b || "<" == b[0] || "I" == b[0] ? alertify.alert(b) : ($("#LoginWindowBG").hide(), $("#container").removeClass("behindDialog"), a.GotLoginData(b), $("#name,#email,#password").val(""), $("input[name=gender]").removeAttr("checked"), $("#year,#month,#day").val("0"))
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    $("#RegisterSubmit").removeClass("grayspin");
+                    console.log( errorThrown );
+                    alertify.error("Network Error. Try Again.")
+                },
             });
             // ajaxlogin
         }

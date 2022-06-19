@@ -5,4 +5,6 @@ export interface UserModel extends SuperModel {
 	account_id: number;
 	gender: string;
 	birthday: Date;
+	rank: number;
+	country: string;
 }

@@ -55,7 +55,9 @@ export class QueryBuilder {
 	}
 
 	public into(tablename: string, columns: string[]): QueryBuilder {
-		const columns_query = columns.join(", ");
+		const columns_query = columns
+			.map((item: string) => "`" + item + "`")
+			.join(", ");
 		return this.addStep("into", `${tablename} (${columns_query})`);
 	}
 

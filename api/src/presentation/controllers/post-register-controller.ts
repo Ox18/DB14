@@ -6,7 +6,7 @@ import {
 	FindByWhereAccount,
 	FindByWhereOrAccount,
 } from "@/domain/usecases";
-import { AccountModel } from "@/domain/models";
+import { AccountModel, UserModel } from "@/domain/models";
 
 export class PostRegisterController implements Controller {
 	constructor(
@@ -18,8 +18,21 @@ export class PostRegisterController implements Controller {
 
 	async handle(request: PostRegisterController.Request): Promise<HttpResponse> {
 		try {
-			const { name, email, password, birthday, gender } = request;
-			console.log(request);
+			const { name, email, password, gender, month, year, day } = request;
+
+			const birthday = new Date(year, month, day);
+
+			const accountsByWhereOr = await this.findByWhereOrAccount.findByWhereOr({
+				name,
+				email,
+			});
+
+			if (accountsByWhereOr.length > 0) {
+				return ok([
+					"Cuenta ya existe",
+					"Por favor, intentar usar otro correo o username",
+				]);
+			}
 
 			const accountModel = {
 				email,
@@ -29,8 +42,28 @@ export class PostRegisterController implements Controller {
 
 			const newAccountModel = await this.createAccount.create(accountModel);
 
-			return ok(newAccountModel);
+			const userModel = {
+				name,
+				birthday,
+				rank: 0,
+				account_id: newAccountModel.id,
+				gender,
+				country: "PE",
+			} as UserModel;
+
+			const newUserModel = await this.createUser.create({
+				...userModel,
+				birthday: birthday.toISOString().slice(0, 19).replace("T", " "),
+			});
+
+			// 		this.user_id = a;
+			// this.user_rank = b;
+			// this.user_auth_key = d;
+			// this.user_country = c;
+
+			return ok([1, 24, "dwdqwdqwdqwdqwdqd", "PE", 0]);
 		} catch (ex) {
+			console.log(ex)
 			return serverError(ex);
 		}
 	}
@@ -42,6 +75,8 @@ export namespace PostRegisterController {
 		email: string;
 		password: string;
 		gender: string;
-		birthday: Date;
+		year: number;
+		month: number;
+		day: number;
 	};
 }
