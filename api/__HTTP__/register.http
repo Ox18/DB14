@@ -1,0 +1,8 @@
+POST http://localhost:9002/api/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "",
+    "password": "1wefqw",
+    "name": "sdfew"
+}

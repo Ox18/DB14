@@ -1,0 +1,9 @@
+{
+    "exportall.config.folderListener": [
+        "/api/src/data/protocols/db/account",
+        "/api/src/domain/usecases",
+        "/api/src/infra/db/mysql/repositories",
+        "/api/src/presentation/controllers",
+        "/api/src/main/factories/usecases"
+    ]
+}
